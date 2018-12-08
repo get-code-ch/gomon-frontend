@@ -1,0 +1,57 @@
+@import url("https://fonts.googleapis.com/css?family=Lato|Roboto:300|Pacifico|Itim|Kanit");
+.layout {
+  display: grid;
+  grid-template-areas: "header header header" "menu content content" "footer footer footer";
+  grid-template-columns: 150px 1fr;
+  grid-template-rows: auto 1fr auto;
+  grid-gap: 2px;
+  height: 100vh;
+  color: #1565c0;
+  font-family: "Roboto";
+  font-size: small;
+  margin: 3px; }
+  .layout h1 {
+    font-family: "Kanit";
+    color: #1565c0; }
+  .layout main {
+    grid-area: content; }
+  .layout header {
+    grid-area: header; }
+    .layout header h1 {
+      font-family: "Kanit"; }
+  .layout footer {
+    grid-area: footer;
+    color: #d81b60;
+    margin-bottom: 0.5rem; }
+  .layout nav {
+    grid-area: menu;
+    margin-left: 0.0rem; }
+
+@media (max-width: 768px) {
+  .layout {
+    grid-template-areas: "header" "menu" "content" "footer";
+    grid-template-columns: 1fr;
+    grid-template-rows: auto minmax(75px, auto) 1fr auto;
+    /* Footer */ }
+    .layout nav {
+      grid-area: menu;
+      margin: 0; } }
+a {
+  display: block;
+  background-color: #1565c0;
+  font-size: small;
+  color: white;
+  height: 20px;
+  width: 90%;
+  margin-bottom: 3px;
+  cursor: pointer;
+  position: relative;
+  text-align: center;
+  border: none;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.24), 0 3px 6px rgba(0, 0, 0, 0.12);
+  text-decoration: none; }
+
+a:active {
+  background-color: #003c8f; }
+
+/*# sourceMappingURL=menu.component.css.map */

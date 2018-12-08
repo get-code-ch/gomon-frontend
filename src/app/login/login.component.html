@@ -1,0 +1,9 @@
+<div class="login">
+
+  <h1>{{ title }}</h1>
+  <form>
+    <input [(ngModel)]="user.username" placeholder="Username" name="username" type="text" autocomplete="username">
+    <input [(ngModel)]="user.password" placeholder="Password" name="password" type="password" autocomplete="current-password">
+  </form>
+  <button name="Login" (click)="onLoginClick()">Login</button>
+</div>

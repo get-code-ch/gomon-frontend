@@ -1,0 +1,21 @@
+@import "../app.component";
+
+a {
+  display: block;
+  background-color: $primary ;
+  font-size: small;
+  color: white;
+  height: 20px;
+  width: 90%;
+  margin-bottom: 3px;
+  cursor: pointer;
+  position: relative;
+  text-align: center;
+  border: none;
+  box-shadow: 0 3px 6px $shadowD, 0 3px 6px $shadowL;
+  text-decoration: none;
+}
+
+a:active {
+  background-color: $primaryD;
+}

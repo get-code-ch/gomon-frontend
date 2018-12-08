@@ -1,0 +1,21 @@
+@import "../app.component";
+
+span {
+  display: inline-block;
+  padding-right:  5px;
+  padding-bottom:  15px;
+  margin-bottom: 5px;
+}
+button {
+  background-color: #a1a3a3;
+  color: white;
+  height: 20px;
+  width: 50px;
+  margin-left: 2px;
+  margin-top: 2px;
+  cursor: pointer;
+  position: relative;
+  text-align: center;
+  border: none;
+  box-shadow: 0 3px 6px $shadowD, 0 3px 6px $shadowL;
+}

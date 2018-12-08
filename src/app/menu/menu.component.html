@@ -1,0 +1,12 @@
+<div *ngIf="authenticateService.authenticated">
+  <a routerLink="/dashboard">Dashboard</a>
+  <a routerLink="/authorize">Login</a>
+  <div *ngFor="let item of menu">
+    <a routerLink="{{item.link}}">{{item.text}}</a>
+  </div>
+<!--
+  <div *ngFor="let item of menu">
+    <a href="{{item.link}}">{{item.text}}</a>
+  </div>
+  -->
+</div>
