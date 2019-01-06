@@ -1,10 +1,12 @@
 
 <div>
-  <div>
-    <span><button (click)="messageService.clear()">clear</button></span>
-    <span *ngIf="messageService.messages.length">{{messageService.messages[messageService.messages.length-1]}}</span>
+  <div *ngIf="messageService.messages.length && _history" class="messagehistory">
+    <div *ngFor='let message of messageService.messages'>
+      <span (click)="toggleDisplayHistory()">{{message}}</span>
+    </div>
   </div>
-  <!--
-   <div *ngFor='let message of messageService.messages'> {{message}} </div>
-  -->
+  <div *ngIf="messageService.messages.length">
+    <span><button (click)="messageService.clear()">clear</button></span>
+    <span *ngIf="messageService.messages.length && !_history" (click)="toggleDisplayHistory()">{{messageService.messages[messageService.messages.length-1]}}</span>
+  </div>
 </div>

@@ -1,3 +1,15 @@
-<p>
-  dashboard works!
-</p>
+<div *ngIf="authenticateService.authenticated">
+  <h1>Welcome in gomon project</h1>
+</div>
+<div *ngIf="!authenticateService.authenticated">
+  <div class="login">
+
+    <h1>{{ title }}</h1>
+    <form>
+      <input [(ngModel)]="user.username" placeholder="Username" name="username" type="text" autocomplete="username">
+      <input [(ngModel)]="user.password" placeholder="Password" name="password" type="password" autocomplete="current-password">
+    </form>
+    <button name="Login" (click)="onLoginClick()">Login</button>
+  </div>
+
+</div>

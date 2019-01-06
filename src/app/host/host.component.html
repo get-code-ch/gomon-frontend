@@ -1,0 +1,49 @@
+<div>
+  <table class="datagrid">
+    <thead>
+    <tr>
+      <th>Action</th>
+      <th>Key</th>
+      <th>Name</th>
+      <th>FQDN</th>
+      <th>IP</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td>
+        <div class="action">
+          <button *ngIf="workingHost.key !== ''" (click)="saveHostClick()" class="save">
+            <i class="fas fa-check-circle"></i>
+          </button>
+        </div>
+        <div class="action">
+          <button *ngIf="workingHost.key !== ''" (click)="undoClick()" class="undo">
+            <i class="fas fa-undo"></i>
+          </button>
+        </div>
+      </td>
+      <input [(ngModel)]="workingHost.id" type="hidden">
+      <td><input [(ngModel)]="workingHost.key" placeholder="Key" type="text"></td>
+      <td><input [(ngModel)]="workingHost.name" placeholder="Name" type="text"></td>
+      <td><input [(ngModel)]="workingHost.fqdn" placeholder="FQDN" type="text"></td>
+      <td><input [(ngModel)]="workingHost.ip" placeholder="IP" type="text" (focus)="onFocus()"></td>
+    </tr>
+    <tr *ngFor="let h of hosts">
+      <td>
+        <div class="action">
+          <button (click)="editHostClick(h)" class="edit"><span class="fas fa-pencil-alt"></span></button>
+        </div>
+        <div class="action">
+          <button (click)="deleteHostClick(h)" class="remove"><span class="fas fa-trash-alt"></span></button>
+        </div>
+      </td>
+      <td class="item">{{ h.key }}</td>
+      <td class="item">{{ h.name }}</td>
+      <td class="item">{{ h.fqdn }}</td>
+      <td class="item">{{ h.ip}}</td>
+    </tr>
+    </tbody>
+
+  </table>
+</div>

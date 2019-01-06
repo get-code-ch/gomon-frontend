@@ -1,0 +1,146 @@
+@import url("https://fonts.googleapis.com/css?family=Lato|Roboto:300|Pacifico|Itim|Kanit");
+@import url("https://use.fontawesome.com/releases/v5.5.0/css/all.css");
+@import url("https://fonts.googleapis.com/css?family=Lato|Roboto:300|Pacifico|Itim|Kanit");
+@import url("https://use.fontawesome.com/releases/v5.5.0/css/all.css");
+body {
+  border: #003c8f;
+  display: contents; }
+
+.layout {
+  display: grid;
+  grid-template-areas: "header header header" "menu content content" "footer footer footer";
+  grid-template-columns: 150px 1fr;
+  grid-template-rows: auto 1fr auto;
+  grid-gap: 2px;
+  height: 100vh;
+  color: #1565c0;
+  font-family: "Roboto";
+  font-size: small; }
+  .layout h1 {
+    font-family: "Kanit";
+    color: #1565c0; }
+  .layout main {
+    grid-area: content; }
+  .layout header {
+    grid-area: header; }
+    .layout header h1 {
+      font-family: "Kanit"; }
+  .layout footer {
+    grid-area: footer;
+    color: #d81b60;
+    margin-bottom: 0.5rem; }
+  .layout nav {
+    grid-area: menu;
+    margin-left: 0.0rem; }
+
+@media (max-width: 768px) {
+  .layout {
+    grid-template-areas: "header" "menu" "content" "footer";
+    grid-template-columns: 1fr;
+    grid-template-rows: auto minmax(75px, auto) 1fr auto;
+    /* Footer */ }
+    .layout nav {
+      grid-area: menu;
+      margin: 0; } }
+body {
+  border: #003c8f;
+  display: contents; }
+
+.layout {
+  display: grid;
+  grid-template-areas: "header header header" "menu content content" "footer footer footer";
+  grid-template-columns: 150px 1fr;
+  grid-template-rows: auto 1fr auto;
+  grid-gap: 2px;
+  height: 100vh;
+  color: #1565c0;
+  font-family: "Roboto";
+  font-size: small; }
+  .layout h1 {
+    font-family: "Kanit";
+    color: #1565c0; }
+  .layout main {
+    grid-area: content; }
+  .layout header {
+    grid-area: header; }
+    .layout header h1 {
+      font-family: "Kanit"; }
+  .layout footer {
+    grid-area: footer;
+    color: #d81b60;
+    margin-bottom: 0.5rem; }
+  .layout nav {
+    grid-area: menu;
+    margin-left: 0.0rem; }
+
+@media (max-width: 768px) {
+  .layout {
+    grid-template-areas: "header" "menu" "content" "footer";
+    grid-template-columns: 1fr;
+    grid-template-rows: auto minmax(75px, auto) 1fr auto;
+    /* Footer */ }
+    .layout nav {
+      grid-area: menu;
+      margin: 0; } }
+.action {
+  float: left; }
+
+.nd {
+  color: lightgray;
+  background-color: darkorchid;
+  text-align: center; }
+
+.item {
+  padding-left: 0.5em; }
+
+.datagrid {
+  border-collapse: collapse;
+  /*
+  ::-webkit-inner-spin-button {
+    display: none;
+  }
+  */ }
+  .datagrid ::-webkit-datetime-edit {
+    color: #1565c0; }
+  .datagrid table {
+    width: 100vw;
+    border-collapse: collapse; }
+  .datagrid th {
+    color: #d81b60; }
+  .datagrid tr td:nth-child(1), .datagrid tr th:nth-child(1) {
+    width: 56px; }
+  .datagrid tr td:nth-child(2), .datagrid tr th:nth-child(2) {
+    width: 56px; }
+  .datagrid input, .datagrid select {
+    height: 20px;
+    margin-top: 0.3em;
+    border: 1px solid #a1a3a3;
+    color: #1565c0;
+    padding-left: 0.3em;
+    transition: box-shadow 0.3s; }
+  .datagrid input:focus, .datagrid select:focus {
+    box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.12);
+    outline: 0; }
+  .datagrid button {
+    float: outside;
+    display: block;
+    background-color: transparent;
+    color: #1565c0;
+    width: 20px;
+    height: 20px;
+    margin-top: 0.3em;
+    cursor: pointer;
+    position: relative;
+    text-align: center;
+    border: none;
+    box-shadow: none; }
+  .datagrid button.save {
+    color: darkgreen; }
+  .datagrid button.undo {
+    color: #1565c0; }
+  .datagrid button.remove {
+    color: darkred; }
+  .datagrid button.edit {
+    color: #1565c0; }
+
+/*# sourceMappingURL=host.component.css.map */

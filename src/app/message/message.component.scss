@@ -1,11 +1,12 @@
-@import "../app.component";
+@import "../../styles";
 
 span {
   display: inline-block;
-  padding-right:  5px;
-  padding-bottom:  15px;
+  padding-right: 5px;
+  padding-bottom: 15px;
   margin-bottom: 5px;
 }
+
 button {
   background-color: #a1a3a3;
   color: white;
@@ -18,4 +19,18 @@ button {
   text-align: center;
   border: none;
   box-shadow: 0 3px 6px $shadowD, 0 3px 6px $shadowL;
+}
+
+.messagehistory {
+  display: inline-block;
+  color: $primary;
+  background-color: lightgray;
+  border-radius: 3px;
+  width: 25%;
+  box-shadow: 0 3px 6px $shadowD, 0 3px 6px $shadowL;
+  margin: 0;
+  padding: 2px;
+  span {
+    padding: 0px;
+  }
 }

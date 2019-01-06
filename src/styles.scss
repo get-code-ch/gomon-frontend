@@ -1,0 +1,79 @@
+@import url('https://fonts.googleapis.com/css?family=Lato|Roboto:300|Pacifico|Itim|Kanit');
+@import url('https://use.fontawesome.com/releases/v5.5.0/css/all.css');
+
+$primary: #1565c0;
+$primaryL: #5e92f3;
+$primaryD: #003c8f;
+$secondary: #d81b60;
+$secondaryL: #ff5c8d;
+$secondaryD: #a00037;
+$panelBackground: #E1E1E1;
+
+$shadowL: rgba(0, 0, 0, 0.12);
+$shadowD: rgba(0, 0, 0, 0.24);
+
+$contentFont: 'Roboto';
+$titleFont: 'Kanit';
+
+body {
+  border: #003c8f;
+  display: contents;
+}
+
+.layout {
+  display: grid;
+  grid-template-areas: "header header header" "menu content content" "footer footer footer";
+  grid-template-columns: 150px 1fr;
+  grid-template-rows: auto 1fr auto;
+  grid-gap: 2px;
+  height: 100vh;
+
+  color: $primary;
+  font-family: $contentFont;
+  font-size: small;
+
+  h1 {
+    font-family: $titleFont;
+    color: $primary;
+  }
+
+  main {
+    grid-area: content;
+  }
+
+  header {
+    grid-area: header;
+    h1 {
+      font-family: $titleFont;
+    }
+  }
+
+  footer {
+    grid-area: footer;
+    color: $secondary;
+    margin-bottom: 0.5rem;
+  }
+
+  nav {
+    grid-area: menu;
+    margin-left: 0.0rem;
+  }
+
+}
+
+@media (max-width: 768px) {
+  .layout {
+    grid-template-areas: "header" "menu" "content" "footer";
+
+    grid-template-columns: 1fr;
+    grid-template-rows: auto /* Header */
+    minmax(75px, auto) /* Nav */
+    1fr /* Content */
+    auto; /* Footer */
+
+    nav {
+      grid-area: menu;
+      margin: 0;
+    }
+  }
+}

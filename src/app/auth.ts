@@ -5,4 +5,5 @@ export class User {
 
 export class JwtToken {
   token: string;
+  msg: string;
 }

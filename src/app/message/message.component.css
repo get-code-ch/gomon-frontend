@@ -1,4 +1,9 @@
 @import url("https://fonts.googleapis.com/css?family=Lato|Roboto:300|Pacifico|Itim|Kanit");
+@import url("https://use.fontawesome.com/releases/v5.5.0/css/all.css");
+body {
+  border: #003c8f;
+  display: contents; }
+
 .layout {
   display: grid;
   grid-template-areas: "header header header" "menu content content" "footer footer footer";
@@ -8,8 +13,7 @@
   height: 100vh;
   color: #1565c0;
   font-family: "Roboto";
-  font-size: small;
-  margin: 3px; }
+  font-size: small; }
   .layout h1 {
     font-family: "Kanit";
     color: #1565c0; }
@@ -54,5 +58,17 @@ button {
   text-align: center;
   border: none;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.24), 0 3px 6px rgba(0, 0, 0, 0.12); }
+
+.messagehistory {
+  display: inline-block;
+  color: #1565c0;
+  background-color: lightgray;
+  border-radius: 3px;
+  width: 25%;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.24), 0 3px 6px rgba(0, 0, 0, 0.12);
+  margin: 0;
+  padding: 2px; }
+  .messagehistory span {
+    padding: 0px; }
 
 /*# sourceMappingURL=message.component.css.map */

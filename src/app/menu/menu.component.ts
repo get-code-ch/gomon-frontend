@@ -1,8 +1,6 @@
-import {Component, Input, OnInit} from '@angular/core';
-import { Menu} from '../menu';
+import {Component, OnInit} from '@angular/core';
+import {Menu} from '../menu';
 import {AuthService} from '../auth.service';
-import {MessageService} from '../message.service';
-import {JwtToken} from '../auth';
 
 @Component({
   selector: 'app-menu',
@@ -11,18 +9,18 @@ import {JwtToken} from '../auth';
 })
 export class MenuComponent implements OnInit {
 
-  menu: Menu[] = [{text: 'Home', link: '/'}, {text: 'Host', link: '/hosts'}];
-  token: JwtToken = {token: ''};
+  menu: Menu[] = [
+    {text: 'Home', link: '/'},
+    {text: 'Live View', link: '/liveview'},
+    {text: 'Probe', link: '/probe'},
+    {text: 'Host', link: '/host'},
+    {text: 'Command', link: '/command'},
+  ];
 
-  constructor(private authenticateService: AuthService, private messageService: MessageService) { }
+  constructor(public authenticateService: AuthService) {
+  }
 
   ngOnInit() {
-    this.authenticateService.getToken()
-      .subscribe(t => this.token = t);
-    if (!this.authenticateService.authenticated) {
-      this.messageService.add('logon please...');
-    }
-
   }
 
 }

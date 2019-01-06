@@ -1,0 +1,8 @@
+<input [(ngModel)]="echoTxt" placeholder="Echo" type="text"/>
+<button (click)="sendBtnClick()">Echo</button>
+<input [(ngModel)]="broadcastTxt" placeholder="Broadcast" type="text"/>
+<button (click)="broadcastBtnClick()">Broadcast</button>
+
+<p>
+  Realtime Message {{ messageService.messages[messageService.messages.length - 1] }}
+</p>

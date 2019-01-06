@@ -1,0 +1,52 @@
+<div>
+  <table class="datagrid">
+    <thead>
+    <tr>
+      <th>Action</th>
+      <th>Key</th>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Command</th>
+      <th>Command Type</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td>
+        <div class="action">
+          <button *ngIf="workingCommand.key !== ''" (click)="saveCommandClick()" class="save">
+            <i class="fas fa-check-circle"></i>
+          </button>
+        </div>
+        <div class="action">
+          <button *ngIf="workingCommand.key !== ''" (click)="undoClick()" class="undo">
+            <i class="fas fa-undo"></i>
+          </button>
+        </div>
+      </td>
+      <input [(ngModel)]="workingCommand.id" type="hidden">
+      <td><input [(ngModel)]="workingCommand.key" placeholder="Key" type="text"></td>
+      <td><input [(ngModel)]="workingCommand.name" placeholder="Name" type="text"></td>
+      <td><input [(ngModel)]="workingCommand.description" placeholder="Description" type="text"></td>
+      <td><input [(ngModel)]="workingCommand.command" placeholder="Command" type="text" ></td>
+      <td><input [(ngModel)]="workingCommand.command_type" placeholder="Command Type" type="text"></td>
+    </tr>
+    <tr *ngFor="let c of commands">
+      <td>
+        <div class="action">
+          <button (click)="editCommandClick(c)" class="edit"><span class="fas fa-pencil-alt"></span></button>
+        </div>
+        <div class="action">
+          <button (click)="deleteCommandClick(c)" class="remove"><span class="fas fa-trash-alt"></span></button>
+        </div>
+      </td>
+      <td class="item">{{ c.key }}</td>
+      <td class="item">{{ c.name }}</td>
+      <td class="item">{{ c.description }}</td>
+      <td class="item">{{ c.command}}</td>
+      <td class="item">{{ c.command_type}}</td>
+    </tr>
+    </tbody>
+
+  </table>
+</div>

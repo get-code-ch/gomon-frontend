@@ -3,7 +3,11 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  apiUrl: 'http://vm-debian:8080',
+  socketUrl: 'ws://vm-debian:8080/socket'
+  // socketUrl: undefined
+
 };
 
 /*

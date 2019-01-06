@@ -1,0 +1,81 @@
+<div>
+  <table class="datagrid">
+    <thead>
+    <tr>
+      <th></th>
+      <th>Action</th>
+      <th>Host</th>
+      <th>Command</th>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Interval</th>
+      <th>Next</th>
+      <th>Last</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td></td>
+      <td>
+        <div class="action">
+          <button *ngIf="workingProbe.name !== ''" (click)="saveProbeClick()" class="save">
+            <i class="fas fa-check-circle"></i>
+          </button>
+        </div>
+        <div class="action">
+          <button *ngIf="workingProbe.name !== ''" (click)="undoClick()" class="undo">
+            <i class="fas fa-undo"></i>
+          </button>
+        </div>
+      </td>
+      <input [(ngModel)]="workingProbe.id" type="hidden">
+      <td>
+        <select [(ngModel)]="workingProbe.host_id">
+          <option *ngFor="let h of hosts" [ngValue]="h.id">{{h.name}}</option>
+        </select>
+      </td>
+      <td>
+        <select [(ngModel)]="workingProbe.command_id">
+          <option *ngFor="let c of commands" [ngValue]="c.id">{{c.name}}</option>
+        </select>
+      </td>
+      <td><input [(ngModel)]="workingProbe.name" placeholder="Name" type="text"></td>
+      <td><input [(ngModel)]="workingProbe.description" placeholder="Description" type="text"></td>
+      <td><input [(ngModel)]="workingProbe.interval" placeholder="Interval" type="number" ></td>
+      <td><input [(ngModel)]="workingProbe.next" placeholder="Next" type="datetime-local" value="{{ workingProbe.next }}"></td>
+      <!--
+      <td><input [(ngModel)]="workingProbe.last" placeholder="Last" type="datetime-local" readonly></td>
+      -->
+      <td></td>
+      <td></td>
+    </tr>
+    <tr *ngFor="let p of probes">
+      <td>
+        <div *ngIf="workingProbe.state !== ''" class="{{ p.state }}">{{ p.state }}</div>
+        <div *ngIf="workingProbe.state === ''" class="nd">N/D</div>
+      </td>
+      <td>
+        <div class="action">
+          <button (click)="editProbeClick(p)" class="edit"><span class="fas fa-pencil-alt"></span></button>
+        </div>
+        <div class="action">
+          <button (click)="deleteProbeClick(p)" class="remove"><span class="fas fa-trash-alt"></span></button>
+        </div>
+      </td>
+      <td class="item">{{ hostName(p.host_id)}}</td>
+      <td class="item">{{ commandName(p.command_id)}}</td>
+      <td class="item">{{ p.name }}</td>
+      <td class="item">{{ p.description }}</td>
+      <td class="item">{{ p.interval }}</td>
+      <!-- -->
+      <td class="item">{{ p.next | date:'EE dd.MM.yyyy HH:mm':'+01:00' }}</td>
+      <td class="item">{{ p.last | date:'EE dd.MM.yyyy HH:mm':'+01:00' }}</td>
+      <!--
+      <td class="item"></td>
+      <td class="item"></td>
+      -->
+    </tr>
+    </tbody>
+
+  </table>
+</div>

@@ -1,0 +1,104 @@
+@import "../styles";
+
+.action {
+  float: left;
+}
+
+.ok {
+
+}
+
+.nd {
+  color: lightgray;
+  background-color: darkorchid;
+  text-align: center;
+}
+
+.item {
+  padding-left: 0.5em;
+}
+
+.datagrid {
+
+  border-collapse: collapse;
+
+  ::-webkit-datetime-edit {
+    color: $primary;
+  }
+
+  /*
+  ::-webkit-inner-spin-button {
+    display: none;
+  }
+  */
+
+  table {
+    width: 100vw;
+    border-collapse: collapse;
+  }
+
+  th {
+    color: $secondary;
+  }
+
+  td {
+  }
+
+  tr td:nth-child(1), tr th:nth-child(1) {
+    width: 56px;
+  }
+
+  tr td:nth-child(2), tr th:nth-child(2) {
+    width: 56px;
+  }
+
+  input, select {
+    height: 20px;
+    margin-top: 0.3em;
+
+    border: 1px solid #a1a3a3;
+    color: $primary;
+    padding-left: 0.3em;
+    transition: box-shadow 0.3s;
+
+  }
+
+  input:focus, select:focus {
+    box-shadow: 0 0 4px 1px $shadowL;
+    outline: 0;
+  }
+
+  button {
+    float: outside;
+    display: block;
+    background-color: transparent;
+    color: $primary;
+    width: 20px;
+    height: 20px;
+
+    margin-top: 0.3em;
+
+    cursor: pointer;
+    position: relative;
+    text-align: center;
+    border: none;
+    box-shadow: none;
+
+  }
+
+  button.save {
+    color: darkgreen;
+  }
+
+  button.undo {
+    color: $primary;
+  }
+
+  button.remove {
+    color: darkred;
+  }
+
+  button.edit {
+    color: $primary;
+  }
+}

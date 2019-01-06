@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {MessageService} from '../message.service';
 
 @Component({
@@ -8,9 +8,15 @@ import {MessageService} from '../message.service';
 })
 export class MessageComponent implements OnInit {
 
-  constructor(public messageService: MessageService) { }
+  _history = false;
+
+  constructor(public messageService: MessageService) {
+  }
 
   ngOnInit() {
   }
 
+  toggleDisplayHistory() {
+    this._history = !this._history;
+  }
 }
