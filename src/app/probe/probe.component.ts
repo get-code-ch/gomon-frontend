@@ -1,13 +1,14 @@
-import {Component, OnInit, LOCALE_ID} from '@angular/core';
+import {Component, OnInit, OnDestroy, LOCALE_ID} from '@angular/core';
 import {formatDate} from '@angular/common';
 
-import {ProbeService} from '../probe.service';
-import {Probe} from '../probe';
-import {Host} from '../host';
-import {Command} from '../command';
-import {MessageService} from '../message.service';
-import {HostService} from '../host.service';
-import {CommandService} from '../command.service';
+import {ProbeService} from './probe.service';
+import {Probe} from './probe';
+import {Host} from '../host/host';
+import {Command} from '../command/command';
+import {MessageService} from '../message/message.service';
+import {HostService} from '../host/host.service';
+import {CommandService} from '../command/command.service';
+import {LoggingService} from '../logging/logging.service';
 
 @Component({
   selector: 'app-probe',
@@ -18,12 +19,16 @@ import {CommandService} from '../command.service';
   ],
 
 })
-export class ProbeComponent implements OnInit {
+export class ProbeComponent implements OnInit, OnDestroy {
 
   constructor(private _probeService: ProbeService,
               private _hostService: HostService,
               private _commandService: CommandService,
-              private _msg: MessageService) {
+              private _msg: MessageService,
+              private _logs: LoggingService) {
+    this.probes = _probeService.probes;
+    this.hosts = _hostService.hosts;
+    this.commands = _commandService.commands;
   }
 
   public probes: Probe[];
@@ -46,47 +51,66 @@ export class ProbeComponent implements OnInit {
   }
 
   ngOnInit() {
+
     this.workingProbe = new Probe();
     this._saveProbe = new Probe();
     this.workingProbe.next = formatDate(new Date(), 'yyyy-MM-ddTHH:mm:ss', 'fr-CH');
     this.workingProbe.last = formatDate(new Date(2001, 1, 1, 0, 0, 0, 0), 'yyyy-MM-ddTHH:mm:ss', 'fr-CH');
-    this._msg.add('Loading probe table...');
+    this._logs.add('Loading probe table...');
 
-    this._probeService.getProbe().subscribe(result => {
-      this._msg.add('Probe table loaded');
-      this.probes = result;
-    }, error => this._msg.add(error.error));
+    // Get Probes List
+    this._probeService.getProbe();
 
     // Get commands List
-    this._commandService.getCommand().subscribe(result => {
-      this._msg.add('Command table loaded');
-      this.commands = result;
-    }, error => this._msg.add(error.error));
+    if (this._commandService.commands.length < 1) {
+      this._commandService.getCommand();
+    }
 
     // Get hosts List
-    this._hostService.getHosts().subscribe(result => {
-      this._msg.add('Host table loaded');
-      this.hosts = result;
-    }, error => this._msg.add(error.error));
+    if (this._hostService.hosts.length < 1) {
+      this._hostService.getHost();
+    }
+  }
+
+  // When we leaving component - Freeing locked probe;
+  ngOnDestroy() {
+    if (this.workingProbe.locked) {
+      this.workingProbe.locked = false;
+      this._logs.add('Unlock editing probe (ignoring change) ' + this.workingProbe.name);
+
+      // Convert date String to ISOString Date format
+      this.workingProbe.next = new Date(this.workingProbe.next).toISOString();
+      this.workingProbe.last = new Date(this.workingProbe.last).toISOString();
+
+      this._msg.send({action: 'UNLOCK', object: 'PROBE', data: JSON.stringify(this.workingProbe), error_code: 0,});
+    }
   }
 
   hostName(id) {
-    if (this.hosts != null) {
+    if (this.hosts.length > 0) {
       return (this.hosts.find(x => x.id === id)).name;
     } else {
-      return null;
+      return undefined;
     }
   }
 
   commandName(id) {
-    if (this.commands != null) {
+    if (this.commands.length > 0) {
       return (this.commands.find(x => x.id === id)).name;
     } else {
-      return null;
+      return undefined;
     }
   }
 
   undoClick() {
+    this.workingProbe.locked = false;
+
+    // Convert date String to ISOString Date format
+    this.workingProbe.next = new Date(this.workingProbe.next).toISOString();
+    this.workingProbe.last = new Date(this.workingProbe.last).toISOString();
+
+    this._msg.send({data: JSON.stringify(this.workingProbe), action: 'UNLOCK', object: 'PROBE', error_code: 0,});
+
     ProbeComponent.copy(this._saveProbe, this.workingProbe);
     this.workingProbe = new Probe();
     this._saveProbe = new Probe();
@@ -95,53 +119,47 @@ export class ProbeComponent implements OnInit {
   }
 
   saveProbeClick() {
+    this.workingProbe.locked = false;
     if (this.workingProbe.id === '' || this.workingProbe.id === undefined) {
       this.workingProbe.id = undefined;
-      this._probeService.saveProbe(this.workingProbe).subscribe(p => {
-        this.probes.push(p);
-        this._msg.add('Probe ' + p.name + ' inserted');
-        this.workingProbe = p;
-
-        this.workingProbe.next = formatDate(new Date(this.workingProbe.next), 'yyyy-MM-ddTHH:mm:ss', 'fr-CH');
-        this.workingProbe.last = formatDate(new Date(this.workingProbe.last), 'yyyy-MM-ddTHH:mm:ss', 'fr-CH');
-
-        ProbeComponent.copy(this.workingProbe, this._saveProbe);
-
-      }, error => this._msg.add(error.error));
     } else {
-      this._probeService.saveProbe(this.workingProbe).subscribe(p => {
-          this._msg.add('Probe ' + p.name + ' updated');
-          this.workingProbe = p;
+      this.workingProbe.next = new Date(this.workingProbe.next).toISOString();
+      this.workingProbe.last = new Date(this.workingProbe.last).toISOString();
 
-          this.workingProbe.next = formatDate(new Date(this.workingProbe.next), 'yyyy-MM-ddTHH:mm:ss', 'fr-CH');
-          this.workingProbe.last = formatDate(new Date(this.workingProbe.last), 'yyyy-MM-ddTHH:mm:ss', 'fr-CH');
-
-          ProbeComponent.copy(this.workingProbe, this._saveProbe);
-
-        },
-        error => this._msg.add(error.error));
+      this._msg.send({data: JSON.stringify(this.workingProbe), action: 'UNLOCK', object: 'PROBE', error_code: 0,});
     }
+    this._probeService.saveProbe(this.workingProbe);
+    this.workingProbe = new Probe();
+    this._saveProbe = new Probe();
   }
 
   editProbeClick(p: Probe) {
-    this.workingProbe = p;
+    if (this.workingProbe.locked) {
+      this.workingProbe.locked = false;
 
-    this.workingProbe.next = formatDate(this.workingProbe.next, 'yyyy-MM-ddTHH:mm:ss', 'fr-CH');
-    this.workingProbe.last = formatDate(this.workingProbe.last, 'yyyy-MM-ddTHH:mm:ss', 'fr-CH');
+      // Convert date String to ISOString Date format
+      this.workingProbe.next = new Date(this.workingProbe.next).toISOString();
+      this.workingProbe.last = new Date(this.workingProbe.last).toISOString();
+
+      this._msg.send({data: JSON.stringify(this.workingProbe), action: 'UNLOCK', object: 'PROBE', error_code: 0,});
+    }
+
+
+    this.workingProbe = p;
+    this.workingProbe.locked = true;
+
+    // Convert date String to ISOString Date format
+    this.workingProbe.next = new Date(this.workingProbe.next).toISOString();
+    this.workingProbe.last = new Date(this.workingProbe.last).toISOString();
+
+    this._msg.send({data: JSON.stringify(this.workingProbe), action: 'LOCK', object: 'PROBE', error_code: 0,});
 
     ProbeComponent.copy(this.workingProbe, this._saveProbe);
 
   }
 
   deleteProbeClick(clickedProbe: Probe) {
-    this._probeService.deleteProbe(clickedProbe).subscribe(p => {
-      this._msg.add(clickedProbe.name + 'Deleted');
-      const idx = this.probes.indexOf(clickedProbe);
-      if (idx > -1) {
-        this.probes.splice(idx, 1);
-        this.workingProbe = new Probe();
-      }
-    }, error => this._msg.add(error.error));
+    this._probeService.deleteProbe(clickedProbe);
   }
 
 }

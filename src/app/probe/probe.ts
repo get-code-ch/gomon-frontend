@@ -12,6 +12,7 @@ export class Probe {
     this.last = undefined;
     this.result = '';
     this.state = '';
+    this.locked = false;
   }
 
   id: string;
@@ -24,5 +25,6 @@ export class Probe {
   last?: string;
   result?: string;
   state?: string;
+  locked?: boolean;
 
 }

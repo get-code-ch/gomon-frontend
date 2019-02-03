@@ -1,7 +1,7 @@
-<div *ngIf="authenticateService.authenticated">
+<div *ngIf="auth.authenticated">
   <h1>Welcome in gomon project</h1>
 </div>
-<div *ngIf="!authenticateService.authenticated">
+<div *ngIf="!auth.authenticated">
   <div class="login">
 
     <h1>{{ title }}</h1>

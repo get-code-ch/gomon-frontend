@@ -1,16 +1,18 @@
-import {Component, OnInit} from '@angular/core';
-import {CommandService} from '../command.service';
-import {Command} from '../command';
-import {MessageService} from '../message.service';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {CommandService} from './command.service';
+import {Command} from './command';
+import {MessageService} from '../message/message.service';
+import {LoggingService} from '../logging/logging.service';
 
 @Component({
   selector: 'app-command',
   templateUrl: './command.component.html',
   styleUrls: ['./command.component.css']
 })
-export class CommandComponent implements OnInit {
+export class CommandComponent implements OnInit, OnDestroy {
 
-  constructor(private _commandService: CommandService, private _msg: MessageService) {
+  constructor(private _commandService: CommandService, private _msg: MessageService, private _logs: LoggingService) {
+    this.commands = _commandService.commands;
   }
 
   public commands: Command[];
@@ -28,51 +30,53 @@ export class CommandComponent implements OnInit {
   ngOnInit() {
     this.workingCommand = new Command();
     this._saveCommand = new Command();
-    this._commandService.getCommand().subscribe(result => {
-      this._msg.add('Command table loaded');
-      this.commands = result;
-    }, error => this._msg.add(error.error));
+    this._commandService.getCommand();
+  }
+
+  // When we leaving component - Freeing locked probe;
+  ngOnDestroy() {
+    if (this.workingCommand.locked) {
+      this.workingCommand.locked = false;
+      this._logs.add('Unlock editing command (ignoring change) ' + this.workingCommand.name);
+      this._msg.send({action: 'UNLOCK', object: 'COMMAND', data: JSON.stringify(this.workingCommand), error_code: 0,});
+    }
   }
 
   undoClick() {
+    this.workingCommand.locked = false;
+    this._msg.send({data: JSON.stringify(this.workingCommand), action: 'UNLOCK', object: 'COMMAND', error_code: 0,});
     CommandComponent.copy(this._saveCommand, this.workingCommand);
+
     this.workingCommand = new Command();
     this._saveCommand = new Command();
   }
 
   saveCommandClick() {
+    this.workingCommand.locked = false;
     if (this.workingCommand.id === '' || this.workingCommand.id === undefined) {
       this.workingCommand.id = undefined;
-      this._commandService.saveCommand(this.workingCommand).subscribe(c => {
-        this.commands.push(c);
-        this._msg.add('Command ' + c.key + ' inserted');
-        this.workingCommand = c;
-        CommandComponent.copy(this.workingCommand, this._saveCommand);
-      }, error => this._msg.add(error.error));
     } else {
-      this._commandService.saveCommand(this.workingCommand).subscribe(c => {
-          this._msg.add('Command ' + c.key + ' updated');
-          this.workingCommand = c;
-          CommandComponent.copy(this.workingCommand, this._saveCommand);
-        },
-        error => this._msg.add(error.error));
+      this._msg.send({data: JSON.stringify(this.workingCommand), action: 'UNLOCK', object: 'COMMAND', error_code: 0,});
     }
+    this._commandService.saveCommand(this.workingCommand);
+    this.workingCommand = new Command();
+    this._saveCommand = new Command();
   }
 
   editCommandClick(c: Command) {
+    if (this.workingCommand.locked) {
+      this.workingCommand.locked = false;
+      this._msg.send({data: JSON.stringify(this.workingCommand), action: 'UNLOCK', object: 'COMMAND', error_code: 0,});
+    }
+
     this.workingCommand = c;
+    this.workingCommand.locked = true;
+    this._msg.send({data: JSON.stringify(this.workingCommand), action: 'LOCK', object: 'COMMAND', error_code: 0,});
     CommandComponent.copy(this.workingCommand, this._saveCommand);
   }
 
   deleteCommandClick(clickedCommand: Command) {
-    this._commandService.deleteCommand(clickedCommand).subscribe(host => {
-      this._msg.add(clickedCommand.key + 'Deleted');
-      const idx = this.commands.indexOf(clickedCommand);
-      if (idx > -1) {
-        this.commands.splice(idx, 1);
-        this.workingCommand = new Command();
-      }
-    }, error => this._msg.add(error.error));
+    this._commandService.deleteCommand(clickedCommand);
   }
 
 }

@@ -34,10 +34,10 @@
     <tr *ngFor="let c of commands">
       <td>
         <div class="action">
-          <button (click)="editCommandClick(c)" class="edit"><span class="fas fa-pencil-alt"></span></button>
+          <button (click)="editCommandClick(c)" [className]="c.locked ? 'grey' : 'edit'" [disabled]="c.locked"><span class="fas fa-pencil-alt"></span></button>
         </div>
         <div class="action">
-          <button (click)="deleteCommandClick(c)" class="remove"><span class="fas fa-trash-alt"></span></button>
+          <button (click)="deleteCommandClick(c)" [className]="c.locked ? 'grey' : 'remove'" [disabled]="c.locked"><span class="fas fa-trash-alt"></span></button>
         </div>
       </td>
       <td class="item">{{ c.key }}</td>

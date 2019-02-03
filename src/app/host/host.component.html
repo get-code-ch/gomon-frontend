@@ -32,10 +32,10 @@
     <tr *ngFor="let h of hosts">
       <td>
         <div class="action">
-          <button (click)="editHostClick(h)" class="edit"><span class="fas fa-pencil-alt"></span></button>
+          <button (click)="editHostClick(h)"  [className]="h.locked ? 'grey' : 'edit'" [disabled]="h.locked"><span class="fas fa-pencil-alt"></span></button>
         </div>
         <div class="action">
-          <button (click)="deleteHostClick(h)" class="remove"><span class="fas fa-trash-alt"></span></button>
+          <button (click)="deleteHostClick(h)"[className]="h.locked ? 'grey' : 'remove'" [disabled]="h.locked"><span class="fas fa-trash-alt"></span></button>
         </div>
       </td>
       <td class="item">{{ h.key }}</td>

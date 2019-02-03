@@ -5,7 +5,21 @@
 }
 
 .ok {
+  color: lightgray;
+  background-color: darkgreen;
+  text-align: center;
+}
 
+.critical, .error {
+  color: lightgray;
+  background-color: darkred;
+  text-align: center;
+}
+
+.warning {
+  color: lightgray;
+  background-color: darkorange;
+  text-align: center;
 }
 
 .nd {
@@ -100,5 +114,9 @@
 
   button.edit {
     color: $primary;
+  }
+
+  button.grey {
+    color: darkgrey;
   }
 }

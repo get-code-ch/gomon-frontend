@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {MessageService} from '../message.service';
+import {MessageService} from '../message/message.service';
+import {LoggingService} from '../logging/logging.service';
 
 @Component({
   selector: 'app-live-view',
@@ -12,19 +13,21 @@ export class LiveViewComponent implements OnInit {
   public broadcastTxt: string;
   public echoTxt: string;
 
-  constructor(public messageService: MessageService) {
+  constructor(public msg: MessageService, public logs: LoggingService) {
   }
 
   ngOnInit() {
-    this.messageService.connect();
+    if (!this.msg.online) {
+      this.msg.connect();
+    }
   }
 
   sendBtnClick() {
-    this.messageService.send({data: this.echoTxt, action: 'ECHO', error_code: 0, });
+    this.msg.send({data: this.echoTxt, action: 'ECHO', error_code: 0, });
   }
 
   broadcastBtnClick() {
-    this.messageService.send({data: this.broadcastTxt, action: 'BROADCAST',  error_code: 0, });
+    this.msg.send({data: this.broadcastTxt, action: 'BROADCAST',  error_code: 0, });
   }
 
 }

@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {MessageService} from '../message.service';
 
 @Component({
   selector: 'app-message',
@@ -8,15 +7,11 @@ import {MessageService} from '../message.service';
 })
 export class MessageComponent implements OnInit {
 
-  _history = false;
 
-  constructor(public messageService: MessageService) {
+  constructor() {
   }
 
   ngOnInit() {
   }
 
-  toggleDisplayHistory() {
-    this._history = !this._history;
-  }
 }

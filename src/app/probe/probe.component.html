@@ -42,24 +42,20 @@
       <td><input [(ngModel)]="workingProbe.name" placeholder="Name" type="text"></td>
       <td><input [(ngModel)]="workingProbe.description" placeholder="Description" type="text"></td>
       <td><input [(ngModel)]="workingProbe.interval" placeholder="Interval" type="number" ></td>
-      <td><input [(ngModel)]="workingProbe.next" placeholder="Next" type="datetime-local" value="{{ workingProbe.next }}"></td>
-      <!--
-      <td><input [(ngModel)]="workingProbe.last" placeholder="Last" type="datetime-local" readonly></td>
-      -->
       <td></td>
       <td></td>
     </tr>
     <tr *ngFor="let p of probes">
       <td>
-        <div *ngIf="workingProbe.state !== ''" class="{{ p.state }}">{{ p.state }}</div>
-        <div *ngIf="workingProbe.state === ''" class="nd">N/D</div>
+        <div *ngIf="p.state !== ''" class="{{ p.state.toLowerCase() }}">{{ p.state }}</div>
+        <div *ngIf="p.state === ''" class="nd">N/D</div>
       </td>
       <td>
         <div class="action">
-          <button (click)="editProbeClick(p)" class="edit"><span class="fas fa-pencil-alt"></span></button>
+          <button (click)="editProbeClick(p)"  [className]="p.locked ? 'grey' : 'edit'" [disabled]="p.locked"><span class="fas fa-pencil-alt"></span></button>
         </div>
         <div class="action">
-          <button (click)="deleteProbeClick(p)" class="remove"><span class="fas fa-trash-alt"></span></button>
+          <button (click)="deleteProbeClick(p)" [className]="p.locked ? 'grey' : 'remove'" [disabled]="p.locked"><span class="fas fa-trash-alt"></span></button>
         </div>
       </td>
       <td class="item">{{ hostName(p.host_id)}}</td>
@@ -67,13 +63,8 @@
       <td class="item">{{ p.name }}</td>
       <td class="item">{{ p.description }}</td>
       <td class="item">{{ p.interval }}</td>
-      <!-- -->
-      <td class="item">{{ p.next | date:'EE dd.MM.yyyy HH:mm':'+01:00' }}</td>
-      <td class="item">{{ p.last | date:'EE dd.MM.yyyy HH:mm':'+01:00' }}</td>
-      <!--
-      <td class="item"></td>
-      <td class="item"></td>
-      -->
+      <td class="item">{{ p.next | date:'EE dd.MM.yyyy HH:mm:ss':'+01:00' }}</td>
+      <td class="item">{{ p.last | date:'EE dd.MM.yyyy HH:mm:ss':'+01:00' }}</td>
     </tr>
     </tbody>
 

@@ -1,0 +1,11 @@
+
+<div *ngIf="logs.logs.length && _history" class="logginghistory">
+  <!-- TODO: Usage configuration to define max Messages buffer -->
+  <div *ngFor='let log of logs.logs | slice:-10'>
+    <span (click)="toggleDisplayHistory()">{{log}}</span>
+  </div>
+</div>
+<div *ngIf="logs.logs.length">
+  <span><button (click)="logs.clear()">clear</button></span>
+  <span *ngIf="logs.logs.length && !_history" (click)="toggleDisplayHistory()">{{logs.logs[logs.logs.length-1]}}</span>
+</div>

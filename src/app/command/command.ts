@@ -7,6 +7,7 @@ export class Command {
     this.description = '';
     this.command = '';
     this.command_type = '';
+    this.locked = false;
   }
 
   id: string;
@@ -15,4 +16,5 @@ export class Command {
   description: string;
   command: string;
   command_type: string;
+  locked?: boolean;
 }

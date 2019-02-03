@@ -1,10 +1,8 @@
 import {Injectable} from '@angular/core';
-import {Observable, of} from 'rxjs';
+import {Observable, of, Subject} from 'rxjs';
 import {User, JwtToken} from './auth';
-import {MessageService} from './message.service';
 import {HttpClient} from '@angular/common/http';
-import {environment} from '../environments/environment';
-
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -13,11 +11,12 @@ import {environment} from '../environments/environment';
 export class AuthService {
 
 
-  authenticated = false;
+  public authenticated = false;
+  public authChange: Subject<boolean> = new Subject<boolean>();
   private _authUrl = '/api/authenticate';
   private _tk: JwtToken = {token: '', msg: ''};
 
-  constructor(private _messageService: MessageService, private _http: HttpClient) {
+  constructor(private _http: HttpClient) {
   }
 
   loginUser(u: User): Observable<boolean> {
@@ -34,24 +33,23 @@ export class AuthService {
           this._tk = data;
           if (data.msg !== undefined) {
             this._tk.msg = data.msg;
-            this._messageService.add(data.msg);
           }
           if (data.token !== undefined && data.token !== '') {
             this._tk.token = data.token;
             localStorage.setItem('token', this._tk.token);
             this.authenticated = true;
-            this._messageService.add('Logged in');
           } else {
             this._tk.token = '';
             localStorage.removeItem('token');
             this.authenticated = false;
           }
+          this.authChange.next(this.authenticated);
         });
     } else {
       this._tk.token = '';
       this.authenticated = false;
       localStorage.removeItem('token');
-      this._messageService.add('Invalid username/password');
+      this.authChange.next(this.authenticated);
     }
     return of(this.authenticated);
   }
@@ -59,6 +57,11 @@ export class AuthService {
   logoutUser() {
     this.authenticated = false;
     localStorage.removeItem('token');
+    this.authChange.next(this.authenticated);
+  }
+
+  isAuthenticated(): boolean {
+    return this.authenticated;
   }
 
   getToken(): JwtToken {
@@ -70,6 +73,8 @@ export class AuthService {
     } else {
       this.authenticated = false;
     }
+    this.authChange.next(this.authenticated);
     return tk;
   }
+
 }

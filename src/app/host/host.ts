@@ -6,6 +6,7 @@ export class Host {
     this.name = '';
     this.fqdn = '';
     this.ip = '';
+    this.locked = false;
   }
 
   id: string;
@@ -13,4 +14,5 @@ export class Host {
   name: string;
   fqdn: string;
   ip: string;
+  locked?: boolean;
 }

@@ -15,6 +15,7 @@ import { ProbeComponent } from './probe/probe.component';
 import { CommandComponent } from './command/command.component';
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr-CH';
+import { LoggingComponent } from './logging/logging.component';
 
 registerLocaleData(localeFr, 'fr-CH');
 
@@ -28,6 +29,7 @@ registerLocaleData(localeFr, 'fr-CH');
     LiveViewComponent,
     ProbeComponent,
     CommandComponent,
+    LoggingComponent,
   ],
   imports: [
     BrowserModule,

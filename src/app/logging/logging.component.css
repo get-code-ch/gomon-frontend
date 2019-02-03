@@ -59,7 +59,7 @@ button {
   border: none;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.24), 0 3px 6px rgba(0, 0, 0, 0.12); }
 
-.messagehistory {
+.logginghistory {
   display: block;
   color: #1565c0;
   background-color: lightgray;
@@ -71,7 +71,7 @@ button {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis; }
-  .messagehistory span {
+  .logginghistory span {
     padding: 0px; }
 
-/*# sourceMappingURL=message.component.css.map */
+/*# sourceMappingURL=logging.component.css.map */

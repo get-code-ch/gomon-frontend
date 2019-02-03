@@ -3,6 +3,8 @@
 <input [(ngModel)]="broadcastTxt" placeholder="Broadcast" type="text"/>
 <button (click)="broadcastBtnClick()">Broadcast</button>
 
-<p>
-  Realtime Message {{ messageService.messages[messageService.messages.length - 1] }}
-</p>
+<div *ngIf="logs.logs.length">
+  <div *ngFor='let message of msg.messages | slice:-100'>
+    <span>{{message}}</span>
+  </div>
+</div>
