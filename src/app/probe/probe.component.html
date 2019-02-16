@@ -9,8 +9,19 @@
       <th>Name</th>
       <th>Description</th>
       <th>Interval</th>
-      <th>Next</th>
-      <th>Last</th>
+      <th>Username</th>
+      <th>Password</th>
+    </tr>
+    <tr>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th style="text-align: left">Next</th>
+      <th style="text-align: left">Last</th>
     </tr>
     </thead>
     <tbody>
@@ -31,6 +42,7 @@
       <input [(ngModel)]="workingProbe.id" type="hidden">
       <td>
         <select [(ngModel)]="workingProbe.host_id">
+          <option [ngValue]="undefined">None</option>
           <option *ngFor="let h of hosts" [ngValue]="h.id">{{h.name}}</option>
         </select>
       </td>
@@ -42,12 +54,27 @@
       <td><input [(ngModel)]="workingProbe.name" placeholder="Name" type="text"></td>
       <td><input [(ngModel)]="workingProbe.description" placeholder="Description" type="text"></td>
       <td><input [(ngModel)]="workingProbe.interval" placeholder="Interval" type="number" ></td>
+      <td><input [(ngModel)]="workingProbe.username" placeholder="Username" type="text"></td>
+      <td><input [(ngModel)]="workingProbe.password" placeholder="Password" type="password"></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
       <td></td>
       <td></td>
     </tr>
     <tr *ngFor="let p of probes">
       <td>
-        <div *ngIf="p.state !== ''" class="{{ p.state.toLowerCase() }}">{{ p.state }}</div>
+        <div *ngIf="p.state !== ''" class="{{ p.state.toLowerCase() }}">
+         {{ p.state }}
+            <span *ngIf="p.result !== ''" class="tooltiptext">{{ p.result }}</span>
+        </div>
+
         <div *ngIf="p.state === ''" class="nd">N/D</div>
       </td>
       <td>

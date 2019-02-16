@@ -13,10 +13,13 @@ export class Probe {
     this.result = '';
     this.state = '';
     this.locked = false;
+
+    this.username = undefined;
+    this.password = undefined;
   }
 
   id: string;
-  host_id: string;
+  host_id?: string;
   command_id: string;
   name: string;
   description?: string;
@@ -26,5 +29,7 @@ export class Probe {
   result?: string;
   state?: string;
   locked?: boolean;
+  username?: string;
+  password?: string;
 
 }

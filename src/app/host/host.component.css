@@ -100,6 +100,24 @@ body {
   background-color: darkorange;
   text-align: center; }
 
+.ok .tooltiptext, .critical .tooltiptext, .error .tooltiptext, .warning .tooltiptext {
+  visibility: hidden;
+  width: 400px;
+  background-color: #1565c0;
+  color: whitesmoke;
+  text-align: left;
+  border-radius: 2px;
+  padding: 5px 0;
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1; }
+
+.ok:hover .tooltiptext, .critical:hover .tooltiptext, .error:hover .tooltiptext, .warning:hover .tooltiptext {
+  visibility: visible;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis; }
+
 .nd {
   color: lightgray;
   background-color: darkorchid;

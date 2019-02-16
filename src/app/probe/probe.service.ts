@@ -26,6 +26,8 @@ export class ProbeService {
               this.probes[idx].name = p.name;
               this.probes[idx].description = p.description;
               this.probes[idx].interval = p.interval;
+              this.probes[idx].username = p.username;
+              this.probes[idx].password = p.password;
             }
             this.probes[idx].next = p.next;
             this.probes[idx].last = p.last;

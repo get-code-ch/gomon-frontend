@@ -28,6 +28,8 @@ export class MessageService {
   private _socket = undefined;
   private _tk;
 
+  public messages: string[] = [];
+
   // For Probe messages/change notification
   public probeChanged: Subject<Probe[]> = new Subject<Probe[]>();
   public probeDeleted: Subject<Probe> = new Subject<Probe>();
@@ -83,9 +85,13 @@ export class MessageService {
           object = msg.object.toUpperCase();
         }
 
+        /*
         if (action === 'LOG') {
           console.log('message received: ' + msg.data + ' error: ' + msg.error_code + ' ' + msg.error);
         }
+        */
+
+        this.add(msg.data);
 
         // TODO: Handle messages
 
@@ -197,6 +203,13 @@ export class MessageService {
 
   send(msg: SocketMessage) {
     this._socket.next(msg);
+  }
+
+  add(message: string) {
+    if (this.messages.length > 50) {
+      this.messages.shift();
+    }
+    this.messages.push(message);
   }
 
 }

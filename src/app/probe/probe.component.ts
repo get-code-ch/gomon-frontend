@@ -48,6 +48,8 @@ export class ProbeComponent implements OnInit, OnDestroy {
     dst.last = src.last;
     dst.result = src.result;
     dst.state = src.state;
+    dst.username = src.username;
+    dst.password = src.password;
   }
 
   ngOnInit() {
@@ -88,7 +90,12 @@ export class ProbeComponent implements OnInit, OnDestroy {
 
   hostName(id) {
     if (this.hosts.length > 0) {
-      return (this.hosts.find(x => x.id === id)).name;
+      const h = this.hosts.find(x => x.id === id);
+      if (h !== undefined) {
+        return h.name;
+      } else {
+        return '';
+      }
     } else {
       return undefined;
     }
@@ -122,13 +129,18 @@ export class ProbeComponent implements OnInit, OnDestroy {
     this.workingProbe.locked = false;
     if (this.workingProbe.id === '' || this.workingProbe.id === undefined) {
       this.workingProbe.id = undefined;
+      this.workingProbe.next = formatDate(new Date(), 'yyyy-MM-ddTHH:mm:ss', 'fr-CH');
+      this.workingProbe.last = formatDate(new Date(2001, 1, 1, 0, 0, 0, 0), 'yyyy-MM-ddTHH:mm:ss', 'fr-CH');
     } else {
       this.workingProbe.next = new Date(this.workingProbe.next).toISOString();
       this.workingProbe.last = new Date(this.workingProbe.last).toISOString();
 
-      this._msg.send({data: JSON.stringify(this.workingProbe), action: 'UNLOCK', object: 'PROBE', error_code: 0,});
+      // this._msg.send({data: JSON.stringify(this.workingProbe), action: 'UNLOCK', object: 'PROBE', error_code: 0,});
     }
+
     this._probeService.saveProbe(this.workingProbe);
+    this._msg.send({data: JSON.stringify(this.workingProbe), action: 'UNLOCK', object: 'PROBE', error_code: 0,});
+
     this.workingProbe = new Probe();
     this._saveProbe = new Probe();
   }

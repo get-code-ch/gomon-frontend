@@ -23,11 +23,11 @@ export class LiveViewComponent implements OnInit {
   }
 
   sendBtnClick() {
-    this.msg.send({data: this.echoTxt, action: 'ECHO', error_code: 0, });
+    this.msg.send({data: this.echoTxt, action: 'ECHO', error_code: 0, object: '',});
   }
 
   broadcastBtnClick() {
-    this.msg.send({data: this.broadcastTxt, action: 'BROADCAST',  error_code: 0, });
+    this.msg.send({data: this.broadcastTxt, action: 'BROADCAST', error_code: 0, object: '',});
   }
 
 }

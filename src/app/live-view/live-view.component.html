@@ -4,7 +4,7 @@
 <button (click)="broadcastBtnClick()">Broadcast</button>
 
 <div *ngIf="logs.logs.length">
-  <div *ngFor='let message of msg.messages | slice:-100'>
-    <span>{{message}}</span>
+  <div *ngFor='let message of msg.messages | slice:-20'>
+    <span>{{message}}<br/></span>
   </div>
 </div>
