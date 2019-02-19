@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {Menu} from './menu';
 import {AuthService} from '../auth/auth.service';
 import {MessageService} from '../message/message.service';
+import {environment} from '../../environments/environment';
+
 
 @Component({
   selector: 'app-menu',
@@ -11,6 +13,7 @@ import {MessageService} from '../message/message.service';
 export class MenuComponent implements OnInit {
 
   public clock;
+  public env;
 
   menu: Menu[] = [
     {text: 'Home', link: '/'},
@@ -23,6 +26,11 @@ export class MenuComponent implements OnInit {
   constructor(public authenticateService: AuthService, public msg: MessageService) { }
 
   ngOnInit() {
+    if (environment.production) {
+      this.env = 'PRODUCTION';
+    } else {
+      this.env = 'DEV';
+    }
     setInterval(() => {
       // const time = new Date();
       this.clock = new Date();
