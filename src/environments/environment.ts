@@ -4,6 +4,7 @@
 
 export const environment = {
   production: false,
+  env: 'DEV',
   apiUrl: 'http://vm-debian:8080',
   socketUrl: 'ws://vm-debian:8080/socket'
   // socketUrl: undefined

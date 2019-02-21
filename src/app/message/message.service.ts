@@ -50,11 +50,7 @@ export class MessageService {
 
   constructor(private _auth: AuthService, private _router: Router, private _logs: LoggingService) {
 
-    if (environment.production) {
-      _logs.add('PRODUCTION');
-    } else {
-      _logs.add('DEV');
-    }
+    _logs.add(environment.env);
 
     // Check if authentication changed open socket or close it.
     _auth.authChange.subscribe((isAuth) => {
