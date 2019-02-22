@@ -26,15 +26,11 @@ export class MenuComponent implements OnInit {
   constructor(public authenticateService: AuthService, public msg: MessageService) { }
 
   ngOnInit() {
-    if (environment.production) {
-      this.env = 'PRODUCTION';
-    } else {
-      this.env = 'DEV';
-    }
+    this.env = environment.env;
     setInterval(() => {
       // const time = new Date();
       this.clock = new Date();
-    }, 1000);
+    }, 500);
 
   }
 
